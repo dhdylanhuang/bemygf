@@ -11,18 +11,29 @@
 		src: url('digital-7_mono.ttf') format("truetype");
 	}
 
+	#body{
+		scroll-behavior: smooth;
+	}
 	#mainDiv {
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		height: 100vh;
 		margin: 0;
+		padding-bottom: 100px;
 	}
 
-	#imageContainer {
-		margin-left: 20px;
+	#imageContainerRight {
+		margin-left: 40px;
+		padding: 30px;
 	}
-	#rightImage {
+
+	#imageContainerLeft {
+		margin-right: 0;
+		padding: 30px;
+	}
+
+	#personalImage {
 		width: 200px;
 		height: auto;
 	}
@@ -36,6 +47,9 @@
 <body>
 
 <div id="mainDiv">
+	<div id="imageContainerLeft">
+		<img id="personalImage" src="img1.JPG" alt="Viv in Italy" />
+	</div>
 	<div id="content">
 		<div id="code">
 			<span class="comments">/**</span><br />
@@ -80,6 +94,7 @@
 			<br>
 			If so... <br />
 			Will you be my girlfriend?<br />
+			<span class="comments">// Generating digital heart... </span><br />
 			<br>
 			<span id="heartspan">
 			<a href="image.jpg"><i class="fas fa-heart" id="icon"></i></a>
@@ -87,8 +102,8 @@
 		</div>
 		<canvas id="garden"></canvas>
 	</div>
-	<div id="imageContainer">
-		<img id="rightImage" src="200w.gif" alt="structural engineering stuff" />
+	<div id="imageContainerRight">
+		<img id="personalImage" src="200w.gif" alt="structural engineering stuff" />
 	</div>
 </div>
 
@@ -96,11 +111,16 @@
 	var offsetX = $("#loveHeart").width() / 2;
 	var offsetY = $("#loveHeart").height() / 2 - 55;
 	var together = new Date();
-	together.setFullYear(2016, 8, 5);
-	together.setHours(16);
-	together.setMinutes(30);
-	together.setSeconds(0);
-	together.setMilliseconds(0);
+	function smoothScrollToBottom() {
+        $('html, body').stop().animate({ scrollTop: $(document).height() }, 1200, 'swing');
+    }
+
+    $(document).ready(function() {
+        var observer = new MutationObserver(function() {
+            smoothScrollToBottom();
+        });
+        observer.observe(document.getElementById("code"), { childList: true, subtree: true });
+	});
 
 	if (!document.createElement('canvas').getContext) {
 		var msg = document.createElement("div");
